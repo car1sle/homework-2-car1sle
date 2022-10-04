@@ -125,13 +125,15 @@ const App = props => {
     name: 'Carly',
   };
 
+  // OK to use const here, because always calling the setter to modify the first arg
   const [count, setCount] = useState(0);
   const [count2, setCount2] = useState(0);
+  const [value, setValue] = useState('');
   // Stick to one value inside of useState
   // CAN put an object inside useState, but not recommended
 
   const myVariable = useRef('initial value');
-  const inputRef = useRef();
+  const inputRef = useRef('');
 
   // JSX allows you to use constructs like: 
   // return <div>Hello World</div>;
@@ -159,16 +161,16 @@ const App = props => {
 
       <br />
 
-      {/* setCount V1:
+      {/* useState V1:
       receive the new value */}
       <button onClick={() => {
           setCount(count + 1);
         }}
       >
-        Increment setCount V1 {count}
+        Increment useState V1 {count}
       </button>
 
-      {/* setCount V2:
+      {/* useState V2:
       receive a function that receives the current value and returns the new value */}
       <button onClick={() => {
           setCount2(c => {
@@ -176,7 +178,15 @@ const App = props => {
           });
         }}
       >
-        Increment setCount V2 {count2}
+        Increment useState V2 {count2}
+      </button>
+
+      {/* useState V3: toggle a class */}
+      <div className={value}></div>
+      <button onClick={() => {
+        setValue('my-class');
+      }}>
+        Add class with useState
       </button>
       
       <br />
