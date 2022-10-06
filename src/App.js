@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 // Single prop (passing a string)
 const MyButton = ({label}) => {
@@ -130,7 +130,18 @@ const App = props => {
   const [count2, setCount2] = useState(0);
   const [value, setValue] = useState('');
   // Stick to one value inside of useState
-  // CAN put an object inside useState, but not recommended
+  // CAN put an object inside useState, but not recommended:
+  const [counter, setCounter] = useState({
+    c1: 0,
+    c2: 0,
+  });
+
+  useEffect(() => {
+    console.log('counter', counter);
+    // useEffect CLEANUP function
+    return () => {};
+  },[counter])
+
 
   const myVariable = useRef('initial value');
   const inputRef = useRef('');
@@ -188,6 +199,28 @@ const App = props => {
       }}>
         Add class with useState
       </button>
+
+      {/* useState v4: object as initial value 
+      Must return a whole new version of counter, a brand new object, in setCounter */}
+      <div>{JSON.stringify(counter)}</div>
+      <button onClick={() => {
+        // counter.c1 = counter.c1 + 1;
+        setCounter({
+          ...counter,
+          c1: counter.c1 + 1
+        });
+      }}>
+        C1 + {counter.c1}
+      </button>
+      <button onClick={() => {
+        // counter.c2 = counter.c2 + 1;
+        setCounter({
+          ...counter,
+          c2: counter.c2 + 1
+        });
+      }}>
+        C2 + {counter.c2}
+      </button>
       
       <br />
 
@@ -215,4 +248,4 @@ const App = props => {
   );
 };
 
-export default App;
+export default App; 
